@@ -60,6 +60,8 @@ services:
       - schema-registry
     ports:
       - "8083:8083"
+    # TODO: configure the waterservices connector here? See also
+    # https://kafka.apache.org/documentation/#connect_configuring
     environment:
       CONNECT_BOOTSTRAP_SERVERS: 'broker:9092'
       CONNECT_REST_ADVERTISED_HOST_NAME: connect
