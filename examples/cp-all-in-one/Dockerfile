@@ -18,3 +18,10 @@ FROM confluentinc/cp-kafka-connect:5.1.2
 ENV CONNECT_PLUGIN_PATH="/usr/share/java,/usr/share/confluent-hub-components"
 
 RUN confluent-hub install --no-prompt confluentinc/kafka-connect-datagen:latest
+
+# Install the Apache assembly. It would be nice to not have to maintain a separate copy
+# of the archive file in this directory for Docker, but a soft link doesn't seem to work.
+# See also:
+#
+# https://stackoverflow.com/questions/46309423/dockerfile-copy-from-a-windows-file-system-to-a-docker-container
+COPY kafka-connect-waterservices-1.0-SNAPSHOT.tar.gz /
