@@ -1,9 +1,5 @@
 ---
 version: '2'
-
-volumes:
-  kafka-connect-waterservices:
-
 services:
   zookeeper:
     image: confluentinc/cp-zookeeper:5.1.2
@@ -53,8 +49,6 @@ services:
 
   connect:
     image: confluentinc/kafka-connect-datagen:latest
-    volumes:
-      - kafka-connect-waterservices:/usr/share/java/kafka-connect-waterservices
     build:
       context: .
       dockerfile: Dockerfile
