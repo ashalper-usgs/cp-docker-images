@@ -24,7 +24,7 @@ RUN apt-get install -y emacs-nox git maven jq
 RUN apt-get autoremove -y
 
 # check out and build kafka-connect-waterservices
-RUN cd /root && git clone -b 1.2 https://github.com/ashalper-usgs/kafka-connect-waterservices.git
+RUN cd /root && git clone https://github.com/ashalper-usgs/kafka-connect-waterservices.git
 RUN cd /root/kafka-connect-waterservices && mvn clean package
 
 # install the Apache assembly
