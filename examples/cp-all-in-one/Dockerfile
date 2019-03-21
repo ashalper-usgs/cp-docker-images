@@ -15,6 +15,22 @@
 
 FROM confluentinc/cp-kafka-connect:5.1.2
 
+# switch from Debian jessie to stretch to install a sufficiently recent
+# version of Maven
+RUN sed -i 's/jessie/stretch/g' /etc/apt/sources.list
+RUN apt-get update
+RUN apt-get dist-upgrade -y
+RUN apt-get install -y emacs-nox git maven jq
+RUN apt-get autoremove -y
+
+# check out and build kafka-connect-waterservices
+RUN cd /root && git clone -b 1.1 https://github.com/ashalper-usgs/kafka-connect-spooldir.git
+RUN cd /root/kafka-connect-spooldir && git pull
+RUN cd /root/kafka-connect-spooldir && mvn clean package
+
+# install the Apache assembly
+RUN tar -C / -xzf /root/kafka-connect-spooldir/target/kafka-connect-spooldir-1.1-SNAPSHOT.tar.gz
+
 ENV CONNECT_PLUGIN_PATH="/usr/share/java,/usr/share/confluent-hub-components"
 
 RUN confluent-hub install --no-prompt confluentinc/kafka-connect-datagen:latest
