@@ -25,10 +25,11 @@ RUN apt-get autoremove -y
 
 # check out and build kafka-connect-waterservices
 RUN cd /root && git clone https://github.com/ashalper-usgs/kafka-connect-waterservices.git
+RUN cd /root/kafka-connect-waterservices && git pull
 RUN cd /root/kafka-connect-waterservices && mvn clean package
 
-# install the JAR
-RUN install -D -t /usr/share/java/kafka-connect-waterservices/ /root/kafka-connect-waterservices/target/kafka-connect-waterservices-1.0-SNAPSHOT.jar
+# install the Apache assembly
+RUN tar -C / -xzf /root/kafka-connect-waterservices/target/kafka-connect-waterservices-1.0-SNAPSHOT.tar.gz
 
 ENV CONNECT_PLUGIN_PATH="/usr/share/java,/usr/share/confluent-hub-components"
 
