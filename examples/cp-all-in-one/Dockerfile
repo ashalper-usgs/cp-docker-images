@@ -23,9 +23,10 @@ RUN apt-get dist-upgrade -y
 RUN apt-get install -y emacs-nox git maven jq
 RUN apt-get autoremove -y
 
+# TODO: run command to create "site" topic
+
 # check out and build kafka-connect-waterservices
-RUN cd /root && git clone https://github.com/ashalper-usgs/kafka-connect-waterservices.git
-RUN cd /root/kafka-connect-waterservices && git pull
+RUN cd /root && if [ -d kafka-connect-waterservices ]; then cd kafka-connect-waterservices && git pull; else git clone https://github.com/ashalper-usgs/kafka-connect-waterservices.git; fi
 RUN cd /root/kafka-connect-waterservices && mvn clean package
 
 # install the Apache assembly
