@@ -19,7 +19,6 @@
         Docker utilities for CP.
     </description>
 
-    <groupId>io.confluent</groupId>
     <artifactId>docker-utils</artifactId>
     <packaging>jar</packaging>
     <name>docker-utils</name>
