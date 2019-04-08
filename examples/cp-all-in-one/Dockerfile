@@ -15,9 +15,13 @@
 
 FROM confluentinc/cp-kafka-connect:5.2.1
 
-# switch from Debian jessie to stretch to install a sufficiently recent
-# version of Maven
-RUN sed -i 's/jessie/stretch/g' /etc/apt/sources.list
+# Switch from Debian jessie to stretch to install a sufficiently recent
+# version of Maven.
+RUN printf 'deb http://deb.debian.org/debian stretch main\n\
+deb http://security.debian.org/debian-security stretch/updates main\n\
+deb http://deb.debian.org/debian stretch-updates main'\
+> /etc/apt/sources.list
+
 RUN apt-get update
 RUN apt-get dist-upgrade -y
 RUN apt-get install -y emacs-nox git maven jq
@@ -26,11 +30,11 @@ RUN apt-get autoremove -y
 # TODO: run command to create "site" topic
 
 # check out and build kafka-connect-waterservices
-RUN cd /root && if [ -d kafka-connect-waterservices ]; then cd kafka-connect-waterservices && git pull; else git clone https://github.com/ashalper-usgs/kafka-connect-waterservices.git; fi
+RUN cd /root && if test -d kafka-connect-waterservices; then cd kafka-connect-waterservices && git pull; else git clone https://github.com/ashalper-usgs/kafka-connect-waterservices.git; fi
 RUN cd /root/kafka-connect-waterservices && mvn clean package
 
 # install the Apache assembly
-RUN tar -C / -xzf /root/kafka-connect-waterservices/target/kafka-connect-waterservices-1.0-SNAPSHOT.tar.gz
+RUN tar -C / -xzf /root/kafka-connect-waterservices/target/kafka-connect-waterservices-1.5-SNAPSHOT.tar.gz
 
 ENV CONNECT_PLUGIN_PATH="/usr/share/java,/usr/share/confluent-hub-components"
 
