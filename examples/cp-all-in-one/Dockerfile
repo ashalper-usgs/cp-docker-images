@@ -13,7 +13,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-FROM confluentinc/cp-kafka-connect:5.1.2
+FROM confluentinc/cp-kafka-connect:5.2.1
 
 # switch from Debian jessie to stretch to install a sufficiently recent
 # version of Maven
