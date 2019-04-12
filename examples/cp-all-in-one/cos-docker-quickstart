@@ -1,0 +1,21 @@
+#! /bin/sh
+#
+#  File: cos-docker-quickstart
+#
+#  Purpose: Automate some steps in *Quick Start using Community
+#           Components (Docker)*
+#           [https://docs.confluent.io/current/quickstart/cos-docker-quickstart.html#quick-start-using-community-components-docker] 
+#
+#  Author: Andrew Halper <ashalper@usgs.gov>
+#
+
+docker-compose exec broker kafka-topics \
+	       --create --zookeeper zookeeper:2181 \
+	       --replication-factor 1 --partitions 1 --topic users
+
+docker-compose exec broker kafka-topics \
+	       --create --zookeeper zookeeper:2181 \
+	       --replication-factor 1 --partitions 1 --topic pageviews
+
+# TODO: requires execution in TTY terminal
+#docker-compose exec ksql-cli ksql http://ksql-server:8088
